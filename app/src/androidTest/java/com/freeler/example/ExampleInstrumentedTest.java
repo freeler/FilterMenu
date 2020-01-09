@@ -1,4 +1,4 @@
-package com.freeler.filtermenu;
+package com.freeler.example;
 
 import android.content.Context;
 
