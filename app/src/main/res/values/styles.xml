@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="FilterMenu">
+        <item name="menuHeight">200dp</item>
+    </style>
+
 </resources>
