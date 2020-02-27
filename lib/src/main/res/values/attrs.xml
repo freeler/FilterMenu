@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="DropDownMenu">
+        <!--menu divider-->
+        <!--menu分割线宽度-->
+        <attr name="menuDividerWidth" format="dimension" />
+        <!--menu分割线上边距-->
+        <attr name="menuDividerMarginTop" format="integer" />
+        <!--menu分割线下边距-->
+        <attr name="menuDividerMarginBottom" format="integer" />
+        <!--menu分割线颜色-->
+        <attr name="menuDividerColor" format="color" />
+
+        <!--divider-->
+        <!--divider高度-->
+        <attr name="dividerLineHeight" format="dimension" />
+        <!--divider左边距-->
+        <attr name="dividerMarginLeft" format="dimension" />
+        <!--divider右边距-->
+        <attr name="dividerMarginRight" format="dimension" />
+        <!--divider背景色-->
+        <attr name="dividerBackgroundColor" format="color" />
+
+        <!--menu-->
+        <!--tab字体大小-->
+        <attr name="menuTextSize" format="dimension" />
+        <!--筛选menu高度-->
+        <attr name="menuHeight" format="dimension" />
+        <!--最大高度百分比-->
+        <attr name="menuMaxHeightPercent" format="float" />
+        <!--筛选menu背景色-->
+        <attr name="menuBackgroundColor" format="color" />
+        <!--选中文字颜色-->
+        <attr name="textSelectedColor" format="color" />
+        <!--未选中文字颜色-->
+        <attr name="textUnSelectedColor" format="color" />
+        <!--tab选中图标-->
+        <attr name="menuSelectedIcon" format="dimension" />
+        <!--tab未选中图标-->
+        <attr name="menuUnSelectedIcon" format="dimension" />
+        <!--文字和图标间距-->
+        <attr name="menuIconPadding" format="dimension" />
+        <!--遮罩颜色-->
+        <attr name="maskColor" format="color" />
+
+    </declare-styleable>
+
+</resources>

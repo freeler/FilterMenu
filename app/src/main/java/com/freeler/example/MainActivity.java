@@ -1,21 +1,22 @@
 package com.freeler.example;
 
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.util.Log;
-
-import com.freeler.flitermenu.FilterMenu;
-import com.freeler.flitermenu.FilterView;
+import com.freeler.flitermenu.DropDownMenu;
+import com.freeler.flitermenu.Filter;
 import com.freeler.flitermenu.helper.FilterViewHelper;
-import com.freeler.flitermenu.listener.OnValueChangeListener;
-import com.freeler.flitermenu.view.ListFilterView;
 import com.freeler.flitermenu.listener.Convert;
+import com.freeler.flitermenu.listener.OnValueChangeListener;
+import com.freeler.flitermenu.view.ListFilter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,44 +25,76 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FilterMenu filterMenu = findViewById(R.id.filterMenu);
 
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(2);
-        FilterView<Integer> filterView = new ListFilterView<Integer>(this)
-                .setOptions(list)
-                .setDisplayConvert(new Convert<Integer, String>() {
-                    @Override
-                    public String apply(Integer integer) {
-                        return integer == 1 ? "ok" : "no";
-                    }
-                })
-                .setTitleName("我的小家")
-                .setValue(1)
-                .setValueToService(new Convert<Integer, Map<String, Object>>() {
-                    @Override
-                    public Map<String, Object> apply(final Integer integer) {
-                        return new HashMap<String, Object>() {
-                            {
-                                put("key", integer + 10);
-                            }
-                        };
-                    }
-                });
+        DropDownMenu dropDownMenu = findViewById(R.id.dropDownMenu);
+        init(dropDownMenu);
+    }
 
-
-        FilterViewHelper build = new FilterViewHelper.Builder(filterMenu)
+    private void init(DropDownMenu dropDownMenu) {
+        new FilterViewHelper.Builder(dropDownMenu)
+                .addCustomStyle()
                 .withDefaultChanged(true)
-                .addFilterView(filterView)
-                .onValueChange(new OnValueChangeListener() {
+                .addFilterView(getGenderFilter())
+                .addFilterView(getAgeFilter())
+                .addListener(new OnValueChangeListener() {
                     @Override
-                    public void changed(@Nullable FilterView filterView, @NonNull Map<String, Object> map) {
+                    public void changed(@Nullable Filter filterView, @NonNull Map<String, Object> map) {
                         Log.e("filter", map.toString());
                     }
                 }).build();
-
-        FilterMenu filterMenu1 = new FilterMenu(this);
-        filterMenu1.
     }
+
+
+    private Filter getGenderFilter() {
+        List<Integer> options = new ArrayList<>();
+        options.add(0);
+        options.add(1);
+        options.add(2);
+        return new ListFilter<Integer>(this)
+                .setNeedAll(true)
+                .setOptions(options)
+                .setDisplayConvert(new Convert<Integer, String>() {
+                    @Override
+                    public String apply(Integer integer) {
+                        return integer == 1 ? "男" : integer == 2 ? "女" : "性别不明";
+                    }
+                })
+                .setTitleName("性别")
+                .setValue(1)
+                .setValueConvert(new Convert<Integer, Map<String, Integer>>() {
+                    @Override
+                    public Map<String, Integer> apply(final Integer integer) {
+                        return new HashMap<String, Integer>() {{
+                            put("gender", integer);
+                        }};
+                    }
+                });
+    }
+
+    private Filter getAgeFilter() {
+        List<Integer> options = new ArrayList<>();
+        options.add(10);
+        options.add(20);
+        options.add(30);
+        return new ListFilter<Integer>(this)
+                .setNeedAll(true)
+                .setOptions(options)
+                .setDisplayConvert(new Convert<Integer, String>() {
+                    @Override
+                    public String apply(Integer integer) {
+                        return integer + "岁";
+                    }
+                })
+                .setTitleName("年龄")
+                .setValue(10)
+                .setValueConvert(new Convert<Integer, Map<String, Integer>>() {
+                    @Override
+                    public Map<String, Integer> apply(final Integer integer) {
+                        return new HashMap<String, Integer>() {{
+                            put("age", integer);
+                        }};
+                    }
+                });
+    }
+
 }

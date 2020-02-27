@@ -3,32 +3,37 @@ package com.freeler.flitermenu.view;
 import android.content.Context;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.freeler.flitermenu.FilterView;
+import com.freeler.flitermenu.Filter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author: xuzeyang
+ * 列表
+ *
+ * @author: freeler
  * @Date: 2020/1/13
  */
-public class ListFilterView<T> extends FilterView<T> {
+public class ListFilter<T> extends Filter<T> {
 
-    private List<T> data;
+    private List<T> data = new ArrayList<>();
     private boolean isNeedAll = false;
 
-    public ListFilterView(Context context) {
+    public ListFilter(Context context) {
         super(context);
     }
 
-    public ListFilterView<T> setOptions(List<T> data) {
+    public ListFilter<T> setOptions(@NonNull List<T> data) {
         this.data = data;
         return this;
     }
 
-    public ListFilterView<T> isNeedAll(boolean isNeedAll) {
+    public ListFilter<T> setNeedAll(boolean isNeedAll) {
         this.isNeedAll = isNeedAll;
         return this;
     }
@@ -52,6 +57,7 @@ public class ListFilterView<T> extends FilterView<T> {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         RecyclerView recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.white));
         return recyclerView;
     }
 
@@ -62,10 +68,7 @@ public class ListFilterView<T> extends FilterView<T> {
         adapter.setOnItemClickListener(new ListFilterAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                getMenuHelper().hide();
-                if (isValueChange(getValue(), data.get(position))) {
-                    getOnFilterValueChangeListener().changed(ListFilterView.this);
-                }
+                changeValueWithHide(data.get(position));
             }
         });
         return adapter;

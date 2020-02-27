@@ -2,15 +2,15 @@ package com.freeler.flitermenu.listener;
 
 import androidx.annotation.Nullable;
 
-import com.freeler.flitermenu.FilterView;
+import com.freeler.flitermenu.Filter;
 
 
 /**
- * 值变化监听
+ * 单个Filter值变化监听
  *
- * @author: xuzeyang
+ * @author: freeler
  * @Date: 2020/1/13
  */
 public interface OnFilterValueChangeListener {
-    void changed(@Nullable FilterView filterView);
+    void changed(@Nullable Filter filter);
 }

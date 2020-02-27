@@ -1,7 +1,9 @@
 package com.freeler.flitermenu.listener;
 
 /**
- * @author: xuzeyang
+ * 装换器
+ *
+ * @author: freeler
  * @Date: 2020/1/13
  */
 public interface Convert<T, U> {

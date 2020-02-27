@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 筛选单选列表
  *
- * @author: xuzeyang
+ * @author: freeler
  * @Date: 2020/1/13
  */
 public class ListFilterAdapter<T> extends RecyclerView.Adapter<ListFilterAdapter.ViewHolder> {
@@ -47,8 +47,8 @@ public class ListFilterAdapter<T> extends RecyclerView.Adapter<ListFilterAdapter
     @Override
     public void onBindViewHolder(@NonNull ListFilterAdapter.ViewHolder holder, final int position) {
         T t = list.get(position);
-        String value = t.toString();
-        if (convert != null) value = convert.apply(t);
+        String value = t == null ? "不限" : t.toString();
+        if (convert != null && t != null) value = convert.apply(t);
         holder.line.setText(value);
         if (listener != null) {
             holder.line.setOnClickListener(new View.OnClickListener() {

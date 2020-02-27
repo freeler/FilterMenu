@@ -1,16 +1,18 @@
 package com.freeler.flitermenu.helper;
 
 
+import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.freeler.flitermenu.FilterMenu;
+import com.freeler.flitermenu.DropDownMenu;
+import com.freeler.flitermenu.Filter;
 import com.freeler.flitermenu.listener.OnValueChangeListener;
-import com.freeler.flitermenu.FilterView;
 import com.freeler.flitermenu.listener.OnFilterValueChangeListener;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,21 +20,23 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * 筛选工具方法
+ * 筛选工具
  *
- * @author: xuzeyang
+ * @author: freeler
  * @Date: 2020/1/11
  */
 public class FilterViewHelper {
 
-    private FilterMenu menu;
-    private List<FilterView> filterViews;
+    private WeakReference<Context> context;
+    private WeakReference<DropDownMenu> dropDownMenuWeakReference;
+    private List<Filter> filterViews;
     private boolean isDefaultChanged;
     private OnValueChangeListener onValueChangeListener;
 
     private FilterViewHelper(Builder builder) {
-        this.menu = builder.menu;
-        this.filterViews = builder.filterViews == null ? new ArrayList<FilterView>() : builder.filterViews;
+        this.context = new WeakReference<>(builder.downMenuWeakReference.get().getContext());
+        this.dropDownMenuWeakReference = builder.downMenuWeakReference;
+        this.filterViews = builder.filterViews == null ? new ArrayList<Filter>() : builder.filterViews;
         this.isDefaultChanged = builder.isDefaultChanged;
         this.onValueChangeListener = builder.onValueChangeListener;
         init();
@@ -40,25 +44,27 @@ public class FilterViewHelper {
 
     @SuppressWarnings("unchecked")
     private void init() {
+        final DropDownMenu dropDownMenu = dropDownMenuWeakReference.get();
+
         final Map<String, Object> menuValues = new HashMap<>();
         List<String> titles = new ArrayList<>();
         List<View> views = new ArrayList<>();
 
-        for (FilterView filterView : filterViews) {
-            titles.add(filterView.getDisplayValue());
-            views.add(filterView.getView());
-            Object value = filterView.getValue();
-            Map serverValue = filterView.getServerValue();
+        for (Filter filter : filterViews) {
+            titles.add(filter.getTabName());
+            views.add(filter.getView());
+            Object value = filter.getValue();
+            Map serverValue = filter.getConvertValue();
             if (value != null && serverValue != null && !serverValue.isEmpty())
                 menuValues.putAll(serverValue);
 
-            filterView.setMenuHelper(this);
-            filterView.setOnFilterValueChangeListener(new OnFilterValueChangeListener() {
+            filter.setMenuHelper(this);
+            filter.setOnChangeListener(new OnFilterValueChangeListener() {
                 @Override
-                public void changed(@Nullable FilterView filterView) {
-                    menu.setTabText(Objects.requireNonNull(filterView).getDisplayValue());
-                    menuValues.putAll(filterView.getServerValue());
-                    activateChanged(filterView, menuValues);
+                public void changed(@Nullable Filter filter) {
+                    dropDownMenu.setTabText(Objects.requireNonNull(filter).getTabName());
+                    menuValues.putAll(filter.getConvertValue());
+                    activateChanged(filter, menuValues);
                 }
             });
 
@@ -67,8 +73,8 @@ public class FilterViewHelper {
         // isDefaultChanged为true时，初始话触发valueChange
         if (isDefaultChanged) activateChanged(null, menuValues);
 
-        menu.setMenu(titles, views);
-        menu.setOnMenuShowListener(new FilterMenu.OnMenuShowListener() {
+        dropDownMenu.setDropDownMenu(titles, views);
+        dropDownMenu.setOnMenuShowListener(new DropDownMenu.OnMenuShowListener() {
             @Override
             public void showAtPosition(int position) {
                 filterViews.get(position).onOpen();
@@ -78,37 +84,44 @@ public class FilterViewHelper {
 
     }
 
-    private void activateChanged(FilterView filterView, Map<String, Object> map) {
+
+    private void activateChanged(Filter filterView, Map<String, Object> map) {
         if (onValueChangeListener != null) {
             onValueChangeListener.changed(filterView, map);
         }
     }
 
     public void hide() {
-        if (menu.isShowing()) menu.closeMenu();
+        DropDownMenu dropDownMenu = dropDownMenuWeakReference.get();
+        if (dropDownMenu != null && dropDownMenu.isShowing()) dropDownMenu.closeMenu();
     }
 
     public static class Builder {
-        private FilterMenu menu;
-        private List<FilterView> filterViews = new ArrayList<>();
+        private WeakReference<DropDownMenu> downMenuWeakReference;
+        private List<Filter> filterViews = new ArrayList<>();
         private boolean isDefaultChanged;
         private OnValueChangeListener onValueChangeListener;
 
-        public Builder(FilterMenu menu) {
-            this.menu = menu;
+        public Builder(DropDownMenu dropDownMenu) {
+            this.downMenuWeakReference = new WeakReference<>(dropDownMenu);
+        }
+
+        public Builder addCustomStyle() {
+
+            return this;
         }
 
         /**
          * 添加筛选项
          *
-         * @param view FilterView，自定义样式需自行继承
+         * @param view Filter，自定义样式需自行继承
          */
-        public Builder addFilterView(FilterView view) {
+        public Builder addFilterView(Filter view) {
             if (view != null) filterViews.add(view);
             return this;
         }
 
-        public Builder addFilterViews(@NonNull List<FilterView> views) {
+        public Builder addFilterViews(@NonNull List<Filter> views) {
             filterViews.addAll(views);
             return this;
         }
@@ -129,7 +142,7 @@ public class FilterViewHelper {
          *
          * @param onValueChangeListener 筛选项的值发生变化监听的接口回调
          */
-        public Builder onValueChange(OnValueChangeListener onValueChangeListener) {
+        public Builder addListener(OnValueChangeListener onValueChangeListener) {
             this.onValueChangeListener = onValueChangeListener;
             return this;
         }

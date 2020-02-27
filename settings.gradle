@@ -1,2 +1,2 @@
-include ':app', ':flitermenu'
+include ':app', ':lib'
 rootProject.name='FilterMenu'
