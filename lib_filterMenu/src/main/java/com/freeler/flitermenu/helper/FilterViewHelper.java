@@ -106,11 +106,6 @@ public class FilterViewHelper {
             this.downMenuWeakReference = new WeakReference<>(dropDownMenu);
         }
 
-        public Builder addCustomStyle() {
-
-            return this;
-        }
-
         /**
          * 添加筛选项
          *

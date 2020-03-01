@@ -31,53 +31,66 @@ import java.util.List;
  */
 public class DropDownMenu extends LinearLayout {
 
-    private static final int DEFAULT_MENU_HEIGHT = dp2Px(32);
-    private static final int DEFAULT_DIVIDER_HEIGHT = dp2Px(0.5f);
-    private static final int DEFAULT_DIVIDER_MARGIN = dp2Px(0);
-    private static final int DEFAULT_MENU_DIVIDER_WIDTH = dp2Px(0.5f);
     private static final int DEFAULT_ICON_PADDING = dp2Px(4f);
+
+    private static final int DEFAULT_MENU_DIVIDER_WIDTH = dp2Px(0.5f);
+    private static final int DEFAULT_MENU_DIVIDER_MARGIN_TOP = dp2Px(0);
+    private static final int DEFAULT_MENU_DIVIDER_MARGIN_BOTTOM = dp2Px(0);
+
+    private static final int DEFAULT_DIVIDER_HEIGHT = dp2Px(0.5f);
+    private static final int DEFAULT_DIVIDER_MARGIN_LEFT = dp2Px(0);
+    private static final int DEFAULT_DIVIDER_MARGIN_RIGHT = dp2Px(0);
+
+    private static final int DEFAULT_MENU_TEXT_SIZE = sp2px(14f);
+    private static final int DEFAULT_MENU_HEIGHT = dp2Px(32);
+
+    private static final int COLOR_WHITE = 0xffffffff;
+    private static final int COLOR_GRAY = 0xff777777;
+    private static final int COLOR_BLACK = 0xff000000;
+    private static final int COLOR_MASK = 0x99000000;
+
 
     // menu分割线宽度
     private int menuDividerWidth = DEFAULT_MENU_DIVIDER_WIDTH;
     // menu分割线上边距
-    private int menuDividerMarginTop = 0;
+    private int menuDividerMarginTop = DEFAULT_MENU_DIVIDER_MARGIN_TOP;
     // menu分割线下边距
-    private int menuDividerMarginBottom = 0;
+    private int menuDividerMarginBottom = DEFAULT_MENU_DIVIDER_MARGIN_BOTTOM;
     // menu分割线颜色
-    private int menuDividerColor = 0xffffffff;
+    private int menuDividerColor = COLOR_WHITE;
 
 
     // divider高度
     private int dividerLineHeight = DEFAULT_DIVIDER_HEIGHT;
     // divider左边距
-    private int dividerMarginLeft = DEFAULT_DIVIDER_MARGIN;
+    private int dividerMarginLeft = DEFAULT_DIVIDER_MARGIN_LEFT;
     // divider右边距
-    private int dividerMarginRight = DEFAULT_DIVIDER_MARGIN;
+    private int dividerMarginRight = DEFAULT_DIVIDER_MARGIN_RIGHT;
     // divider背景色
-    private int dividerBackgroundColor = 0xffff5577;
+    private int dividerBackgroundColor = COLOR_GRAY;
 
 
     // tab字体大小
-    private int menuTextSize = sp2px(14f);
+    private int menuTextSize = DEFAULT_MENU_TEXT_SIZE;
     // 筛选menu高度
     private int menuHeight = DEFAULT_MENU_HEIGHT;
     // 最大高度百分比
     private float menuMaxHeightPercent = 0.6f;
     // 筛选menu背景色
-    private int menuBackgroundColor = 0xffffffff;
-    // 选中文字颜色
-    private int textSelectedColor = 0xff000000;
-    // 未选中文字颜色
-    private int textUnSelectedColor = 0xff000000;
+    private int menuBackgroundColor = COLOR_WHITE;
+    // tab展开时对应标题文字颜色
+    private int textSelectedColor = COLOR_BLACK;
+    // tab关闭时对应标题文字颜色
+    private int textUnSelectedColor = COLOR_BLACK;
     // tab选中图标
     private int menuSelectedIcon;
     // tab未选中图标
     private int menuUnSelectedIcon;
-    // 文字和图标间距
-    private int menuIconPADDING = DEFAULT_ICON_PADDING;
+    // tab标题文字和图标间距
+    private int menuIconPadding = DEFAULT_ICON_PADDING;
 
     // 遮罩颜色
-    private int maskColor = 0x99000000;
+    private int maskColor = COLOR_MASK;
 
     /**
      * 筛选栏
@@ -91,7 +104,6 @@ public class DropDownMenu extends LinearLayout {
      * 弹出菜单父布局
      */
     private FrameLayout popupMenuViews;
-
     /**
      * tabMenuView里面选中的tab位置，-1表示未选中
      */
@@ -135,7 +147,7 @@ public class DropDownMenu extends LinearLayout {
         textUnSelectedColor = typedArray.getColor(R.styleable.DropDownMenu_textUnSelectedColor, textUnSelectedColor);
         menuSelectedIcon = typedArray.getResourceId(R.styleable.DropDownMenu_menuSelectedIcon, menuSelectedIcon);
         menuUnSelectedIcon = typedArray.getResourceId(R.styleable.DropDownMenu_menuUnSelectedIcon, menuUnSelectedIcon);
-        menuIconPADDING = typedArray.getDimensionPixelSize(R.styleable.DropDownMenu_menuIconPadding, menuIconPADDING);
+        menuIconPadding = typedArray.getDimensionPixelSize(R.styleable.DropDownMenu_menuIconPadding, menuIconPadding);
         // mask
         maskColor = typedArray.getColor(R.styleable.DropDownMenu_maskColor, maskColor);
 
@@ -233,9 +245,11 @@ public class DropDownMenu extends LinearLayout {
         tab.setGravity(Gravity.CENTER);
         tab.setTextSize(TypedValue.COMPLEX_UNIT_PX, menuTextSize);
         tab.setTextColor(textUnSelectedColor);
-        tab.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuUnSelectedIcon), null);
-        tab.setCompoundDrawablePadding(menuIconPADDING);
         tab.setText(text);
+        if (menuUnSelectedIcon != 0) {
+            tab.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(menuUnSelectedIcon), null);
+            tab.setCompoundDrawablePadding(menuIconPadding);
+        }
 
         final LinearLayout linearLayout = new LinearLayout(getContext());
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1.0f));
@@ -287,7 +301,7 @@ public class DropDownMenu extends LinearLayout {
                     currentTabPosition = i;
 
                     TextView tabMenuTextView = getTabMenuTextView(i);
-                    if (tabMenuTextView != null) {
+                    if (tabMenuTextView != null && menuSelectedIcon != 0) {
                         tabMenuTextView.setTextColor(textSelectedColor);
                         tabMenuTextView.setCompoundDrawablesWithIntrinsicBounds(null, null,
                                 getResources().getDrawable(menuSelectedIcon), null);
@@ -298,8 +312,10 @@ public class DropDownMenu extends LinearLayout {
                 TextView tabMenuTextView = getTabMenuTextView(i);
                 if (tabMenuTextView != null) {
                     tabMenuTextView.setTextColor(textUnSelectedColor);
-                    tabMenuTextView.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                            getResources().getDrawable(menuUnSelectedIcon), null);
+                    if (menuUnSelectedIcon != 0) {
+                        tabMenuTextView.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                                getResources().getDrawable(menuUnSelectedIcon), null);
+                    }
                 }
 
 
@@ -349,8 +365,10 @@ public class DropDownMenu extends LinearLayout {
             TextView tabMenuTextView = getTabMenuTextView(currentTabPosition);
             if (tabMenuTextView != null) {
                 tabMenuTextView.setTextColor(textUnSelectedColor);
-                tabMenuTextView.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                        getResources().getDrawable(menuUnSelectedIcon), null);
+                if (menuUnSelectedIcon != 0) {
+                    tabMenuTextView.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                            getResources().getDrawable(menuUnSelectedIcon), null);
+                }
             }
 
             popupMenuViews.setVisibility(View.GONE);

@@ -1,7 +1,7 @@
 package com.freeler.example;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,19 +27,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         DropDownMenu dropDownMenu = findViewById(R.id.dropDownMenu);
-        init(dropDownMenu);
+        TextView tvContent = findViewById(R.id.tvContent);
+        init(dropDownMenu, tvContent);
     }
 
-    private void init(DropDownMenu dropDownMenu) {
+    private void init(DropDownMenu dropDownMenu, final TextView tvContent) {
         new FilterViewHelper.Builder(dropDownMenu)
-                .addCustomStyle()
                 .withDefaultChanged(true)
                 .addFilterView(getGenderFilter())
                 .addFilterView(getAgeFilter())
                 .addListener(new OnValueChangeListener() {
                     @Override
                     public void changed(@Nullable Filter filterView, @NonNull Map<String, Object> map) {
-                        Log.e("filter", map.toString());
+                        tvContent.setText(map.toString());
                     }
                 }).build();
     }
@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Filter getGenderFilter() {
         List<Integer> options = new ArrayList<>();
-        options.add(0);
         options.add(1);
         options.add(2);
         return new ListFilter<Integer>(this)

@@ -1,64 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
 
     <com.freeler.flitermenu.DropDownMenu
         android:id="@+id/dropDownMenu"
-        app:menuHeight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:menuBackgroundColor="@color/colorAccent"
+        app:menuHeight="50dp"
         app:menuSelectedIcon="@drawable/ic_screen_up_dark"
         app:menuUnSelectedIcon="@drawable/ic_screen_down_dark"
         app:textSelectedColor="#ffff00"
-        app:textUnSelectedColor="#ffffff"
+        app:textUnSelectedColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/tvContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dropDownMenu">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:text="Hello World!" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:text="Hello World!" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:text="Hello World!" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:text="Hello World!" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:text="Hello World!" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:text="Hello World!" />
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/dropDownMenu"
+        android:gravity="center"
+        android:text="Hello World!" />
 
 
 </RelativeLayout>

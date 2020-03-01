@@ -31,9 +31,9 @@
         <attr name="menuMaxHeightPercent" format="float" />
         <!--筛选menu背景色-->
         <attr name="menuBackgroundColor" format="color" />
-        <!--选中文字颜色-->
+        <!--tab展开时对应标题文字颜色-->
         <attr name="textSelectedColor" format="color" />
-        <!--未选中文字颜色-->
+        <!--tab关闭时对应标题文字颜色-->
         <attr name="textUnSelectedColor" format="color" />
         <!--tab选中图标-->
         <attr name="menuSelectedIcon" format="dimension" />
