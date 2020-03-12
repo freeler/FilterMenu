@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 .withDefaultChanged(true)
                 .addFilterView(getGenderFilter())
                 .addFilterView(getAgeFilter())
-                .addFilterView(ge())
+                .addFilterView(getRoomFilter())
                 .addListener(new OnValueChangeListener() {
                     @Override
                     public void changed(@Nullable Filter filterView, @NonNull Map<String, Object> map) {
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private Filter ge() {
+    private Filter getRoomFilter() {
         List<BaseBean<Integer, String>> options = new ArrayList<>();
         options.add(new BaseBean<>(1, "一居"));
         options.add(new BaseBean<>(2, "二居"));
