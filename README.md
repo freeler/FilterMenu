@@ -27,6 +27,7 @@ new FilterViewHelper.Builder(dropDownMenu)
         .withDefaultChanged(true)
         .addFilterView(getGenderFilter())
         .addFilterView(getAgeFilter())
+        .addFilterView(getRoomFilter())
         .addListener(new OnValueChangeListener() {
             @Override
             public void changed(@Nullable Filter filterView, @NonNull Map<String, Object> map) {
@@ -35,51 +36,90 @@ new FilterViewHelper.Builder(dropDownMenu)
         }).build();
 
 private Filter getGenderFilter() {
-    List<Integer> options = new ArrayList<>();
-    options.add(1);
-    options.add(2);
-    return new ListFilter<Integer>(this)
+    List<BaseBean<Integer, String>> options = new ArrayList<>();
+    options.add(new BaseBean<>(1, "男"));
+    options.add(new BaseBean<>(2, "女"));
+    options.add(new BaseBean<>(0, "性别不明"));
+    return new ListFilter<BaseBean<Integer, String>>(this)
             .setNeedAll(true)
             .setOptions(options)
-            .setDisplayConvert(new Convert<Integer, String>() {
+            .setDisplayConvert(new Convert<BaseBean<Integer, String>, String>() {
                 @Override
-                public String apply(Integer integer) {
-                    return integer == 1 ? "男" : integer == 2 ? "女" : "性别不明";
+                public String apply(BaseBean<Integer, String> baseBean) {
+                    return baseBean.getT2();
                 }
             })
             .setTitleName("性别")
-            .setValue(1)
-            .setValueConvert(new Convert<Integer, Map<String, Integer>>() {
+            .setValue(options.get(0))
+            .setValueConvert(new Convert<BaseBean<Integer, String>, Map<String, Object>>() {
                 @Override
-                public Map<String, Integer> apply(final Integer integer) {
-                    return new HashMap<String, Integer>() {{
-                        put("gender", integer);
+                public Map<String, Object> apply(final BaseBean<Integer, String> baseBean) {
+                    return new HashMap<String, Object>() {{
+                        put("gender", baseBean == null ? null : baseBean.getT1());
                     }};
                 }
             });
 }
 
 private Filter getAgeFilter() {
-    List<Integer> options = new ArrayList<>();
-    options.add(10);
-    options.add(20);
-    options.add(30);
-    return new ListFilter<Integer>(this)
+    List<BaseBean<Integer, String>> options = new ArrayList<>();
+    options.add(new BaseBean<>(10, "十岁"));
+    options.add(new BaseBean<>(20, "二十岁"));
+    options.add(new BaseBean<>(30, "三十岁"));
+    return new ListFilter<BaseBean<Integer, String>>(this)
             .setNeedAll(true)
             .setOptions(options)
-            .setDisplayConvert(new Convert<Integer, String>() {
+            .setDisplayConvert(new Convert<BaseBean<Integer, String>, String>() {
                 @Override
-                public String apply(Integer integer) {
-                    return integer + "岁";
+                public String apply(BaseBean<Integer, String> baseBean) {
+                    return baseBean.getT2();
                 }
             })
             .setTitleName("年龄")
-            .setValue(10)
-            .setValueConvert(new Convert<Integer, Map<String, Integer>>() {
+            .setValue(options.get(0))
+            .setValueConvert(new Convert<BaseBean<Integer, String>, Map<String, Object>>() {
                 @Override
-                public Map<String, Integer> apply(final Integer integer) {
-                    return new HashMap<String, Integer>() {{
-                        put("age", integer);
+                public Map<String, Object> apply(final BaseBean<Integer, String> baseBean) {
+                    return new HashMap<String, Object>() {{
+                        put("age", baseBean == null ? null : baseBean.getT1());
+                    }};
+                }
+            });
+}
+
+private Filter getRoomFilter() {
+    List<BaseBean<Integer, String>> options = new ArrayList<>();
+    options.add(new BaseBean<>(1, "一居"));
+    options.add(new BaseBean<>(2, "二居"));
+    options.add(new BaseBean<>(3, "三居"));
+    options.add(new BaseBean<>(4, "四居"));
+    options.add(new BaseBean<>(5, "五居"));
+    options.add(new BaseBean<>(99, "五居以上"));
+    return new GridListFilter<BaseBean<Integer, String>>(this)
+            .setHeadName("房型选择")
+            .setOptions(options)
+            .setMultiDisplayConvert(new Convert<BaseBean<Integer, String>, String>() {
+                @Override
+                public String apply(BaseBean<Integer, String> baseBean) {
+                    return baseBean.getT2();
+                }
+            })
+            .setTitleName("房型选择")
+            .setValue(null)
+            .setValueConvert(new Convert<List<BaseBean<Integer, String>>, Map<String, Object>>() {
+                @Override
+                public Map<String, Object> apply(final List<BaseBean<Integer, String>> baseBeans) {
+                    return new HashMap<String, Object>() {{
+                        if (baseBeans != null) {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            for (int i = 0; i < baseBeans.size(); i++) {
+                                stringBuilder.append(baseBeans.get(i).getT1());
+                                if (i < baseBeans.size() - 1) {
+                                    stringBuilder.append(",");
+                                }
+                            }
+                            put("room", stringBuilder.length() == 0 ? null : stringBuilder.toString());
+                        }
                     }};
                 }
             });
