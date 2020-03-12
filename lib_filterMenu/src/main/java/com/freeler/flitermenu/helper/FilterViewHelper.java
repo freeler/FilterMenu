@@ -7,8 +7,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.freeler.flitermenu.DropDownMenu;
-import com.freeler.flitermenu.Filter;
+import com.freeler.flitermenu.view.DropDownMenu;
 import com.freeler.flitermenu.listener.OnValueChangeListener;
 import com.freeler.flitermenu.listener.OnFilterValueChangeListener;
 

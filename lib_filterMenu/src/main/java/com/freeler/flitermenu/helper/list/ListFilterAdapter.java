@@ -1,4 +1,4 @@
-package com.freeler.flitermenu.view;
+package com.freeler.flitermenu.helper.list;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -73,7 +73,7 @@ public class ListFilterAdapter<T> extends RecyclerView.Adapter<ListFilterAdapter
         void onClick(int position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView line;
 

@@ -2,7 +2,7 @@ package com.freeler.flitermenu.listener;
 
 import androidx.annotation.Nullable;
 
-import com.freeler.flitermenu.Filter;
+import com.freeler.flitermenu.helper.Filter;
 
 
 /**

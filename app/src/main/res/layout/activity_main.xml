@@ -7,16 +7,12 @@
     tools:context=".MainActivity">
 
 
-    <com.freeler.flitermenu.DropDownMenu
+    <com.freeler.flitermenu.view.DropDownMenu
         android:id="@+id/dropDownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menuBackgroundColor="@color/colorAccent"
-        app:menuHeight="50dp"
         app:menuSelectedIcon="@drawable/ic_screen_up_dark"
-        app:menuUnSelectedIcon="@drawable/ic_screen_down_dark"
-        app:textSelectedColor="#ffff00"
-        app:textUnSelectedColor="#ffffff" />
+        app:menuUnSelectedIcon="@drawable/ic_screen_down_dark" />
 
     <TextView
         android:id="@+id/tvContent"

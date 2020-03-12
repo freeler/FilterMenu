@@ -3,7 +3,7 @@ package com.freeler.flitermenu.listener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.freeler.flitermenu.Filter;
+import com.freeler.flitermenu.helper.Filter;
 
 import java.util.Map;
 

@@ -1,9 +1,8 @@
-package com.freeler.flitermenu;
+package com.freeler.flitermenu.helper;
 
 import android.content.Context;
 import android.view.View;
 
-import com.freeler.flitermenu.helper.FilterViewHelper;
 import com.freeler.flitermenu.listener.Convert;
 import com.freeler.flitermenu.listener.OnFilterValueChangeListener;
 
@@ -24,7 +23,7 @@ public abstract class Filter<T> {
     private FilterViewHelper helper;
     private OnFilterValueChangeListener onChangeListener;
     private Convert<T, String> displayConvert;
-    private Convert<T, Map<String, T>> valueConvert;
+    private Convert<T, Map<String, Object>> valueConvert;
 
     protected Filter(Context context) {
         this.context = new WeakReference<>(context);
@@ -37,6 +36,10 @@ public abstract class Filter<T> {
     public Filter<T> setTitleName(String titleName) {
         this.titleName = titleName;
         return this;
+    }
+
+    public String getTitleName() {
+        return titleName;
     }
 
     public Filter<T> setValue(T value) {
@@ -78,12 +81,12 @@ public abstract class Filter<T> {
      * value的转换，这是用于上传的
      * 例如：convert后是Map<Sting,Integer>("gender",1)，表示上传时候key为"gender"，value为1
      */
-    public Filter<T> setValueConvert(Convert<T, Map<String, T>> convert) {
+    public Filter<T> setValueConvert(Convert<T, Map<String, Object>> convert) {
         this.valueConvert = convert;
         return this;
     }
 
-    public Map<String, T> getConvertValue() {
+    public Map<String, Object> getConvertValue() {
         if (valueConvert != null) {
             return valueConvert.apply(value);
         }
@@ -116,14 +119,10 @@ public abstract class Filter<T> {
      * 触发valueChange监听
      */
     protected void changeValue(T value) {
-        if (onChangeListener != null && isValueChange(getValue(), value)) {
+        if (onChangeListener != null) {
             setValue(value);
             onChangeListener.changed(this);
         }
-    }
-
-    private boolean isValueChange(T value1, T value2) {
-        return value1 != value2;
     }
 
     /**

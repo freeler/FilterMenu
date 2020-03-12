@@ -1,4 +1,4 @@
-package com.freeler.flitermenu;
+package com.freeler.flitermenu.view;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.freeler.flitermenu.R;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.freeler.flitermenu.view;
+package com.freeler.flitermenu.helper.list;
 
 import android.content.Context;
 import android.view.View;
@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.freeler.flitermenu.Filter;
+import com.freeler.flitermenu.helper.Filter;
 
 import java.util.ArrayList;
 import java.util.List;
