@@ -24,10 +24,38 @@ import java.util.List;
  */
 public class GridAdapter<T> extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
 
+    /**
+     * 默认颜色
+     */
+    private int normalBgResource = R.drawable.corner_gray_radius_2;
+    //    private int normalBgColor = Color.parseColor("#F5F5F5");
+    private int normalTextColor = Color.parseColor("#909195");
+    /**
+     * 选中颜色
+     */
+    private int selectedBgResource = R.drawable.corner_light_green_radius_2;
+    //    private int selectedBgColor = Color.parseColor("#DBF2E7");
+    private int selectedTextColor = Color.parseColor("#00AE66");
+
+    /**
+     * 上下文
+     */
     private Context context;
+    /**
+     * 筛选项数据
+     */
     private List<T> list;
+    /**
+     * 已勾选的筛选项数据
+     */
     private List<T> choiceList;
+    /**
+     * item显示需要字符串，用于把T转换为String，如果为null则直接调用toString()方法
+     */
     private Convert<T, String> convert;
+    /**
+     * item点击监听
+     */
     private OnItemClickListener listener;
 
     public GridAdapter(Context context, @NonNull List<T> list, @NonNull List<T> choiceList) {
@@ -52,44 +80,60 @@ public class GridAdapter<T> extends RecyclerView.Adapter<GridAdapter.ViewHolder>
     public void onBindViewHolder(@NonNull final GridAdapter.ViewHolder holder, final int position) {
         final T t = list.get(position);
         String value = t.toString();
-        if (convert != null) value = convert.apply(t);
+        if (convert != null) {
+            value = convert.apply(t);
+        }
         holder.line.setText(value);
-        holder.line.setBackgroundColor(Color.parseColor("#cccccc"));
-        setChoice(holder, t);
+        initItemColorStatus(holder, t);
 
+        // item点击事件
         if (listener != null) {
             holder.line.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    setChoiceByClick(holder, t);
+                    reverseItemColorStatus(holder, t);
                     listener.onClick(position);
                 }
             });
         }
     }
 
-    private void setChoice(GridAdapter.ViewHolder holder, T t) {
-        if (changeToString(choiceList).contains(t.toString())) {
-            holder.line.setBackgroundColor(Color.parseColor("#148927"));
-        } else {
-            holder.line.setBackgroundColor(Color.parseColor("#cccccc"));
-        }
+    /**
+     * 给item设置背景颜色
+     *
+     * @param holder ViewHolder
+     * @param t      泛型对象
+     */
+    private void initItemColorStatus(GridAdapter.ViewHolder holder, T t) {
+        itemColorStatus(holder, t, false);
     }
 
-    private void setChoiceByClick(GridAdapter.ViewHolder holder, T t) {
-        if (changeToString(choiceList).contains(t.toString())) {
-            holder.line.setBackgroundColor(Color.parseColor("#cccccc"));
-        } else {
-            holder.line.setBackgroundColor(Color.parseColor("#148927"));
-        }
+    /**
+     * 点击item时改变背景颜色
+     *
+     * @param holder ViewHolder
+     * @param t      泛型对象
+     */
+    private void reverseItemColorStatus(GridAdapter.ViewHolder holder, T t) {
+        itemColorStatus(holder, t, true);
     }
 
-    private List<String> changeToString(List<T> list) {
+    private void itemColorStatus(GridAdapter.ViewHolder holder, T t, boolean isReverse) {
         ArrayList<String> strings = new ArrayList<>();
-        for (T t1 : list) {
+        for (T t1 : choiceList) {
             strings.add(t1.toString());
         }
-        return strings;
+        boolean contains = strings.contains(t.toString());
+        if (isReverse) contains = !contains;
+        if (contains) {
+//            holder.line.setBackgroundColor(selectedBgColor);
+            holder.line.setBackgroundResource(selectedBgResource);
+            holder.line.setTextColor(selectedTextColor);
+        } else {
+//            holder.line.setBackgroundColor(normalBgColor);
+            holder.line.setBackgroundResource(normalBgResource);
+            holder.line.setTextColor(normalTextColor);
+        }
     }
 
     @Override

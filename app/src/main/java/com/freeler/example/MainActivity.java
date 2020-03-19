@@ -102,12 +102,12 @@ public class MainActivity extends AppCompatActivity {
 
     private Filter getRoomFilter() {
         List<BaseBean<Integer, String>> options = new ArrayList<>();
-        options.add(new BaseBean<>(1, "一居"));
-        options.add(new BaseBean<>(2, "二居"));
-        options.add(new BaseBean<>(3, "三居"));
-        options.add(new BaseBean<>(4, "四居"));
-        options.add(new BaseBean<>(5, "五居"));
-        options.add(new BaseBean<>(99, "五居以上"));
+        options.add(new BaseBean<>(1, "一室"));
+        options.add(new BaseBean<>(2, "二室"));
+        options.add(new BaseBean<>(3, "三室"));
+        options.add(new BaseBean<>(4, "四室"));
+        options.add(new BaseBean<>(5, "五室"));
+        options.add(new BaseBean<>(99, "五室以上"));
         return new GridListFilter<BaseBean<Integer, String>>(this)
                 .setHeadName("房型选择")
                 .setOptions(options)
@@ -132,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                                 put("room", stringBuilder.length() == 0 ? null : stringBuilder.toString());
+                            } else {
+                                put("room", null);
                             }
                         }};
                     }
