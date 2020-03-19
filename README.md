@@ -4,7 +4,10 @@ Android 列表筛选
 
 ## Screenshot
 
-![]()
+![](https://github.com/freeler/FilterMenu/blob/master/screenshot/screen001.png)
+![](https://github.com/freeler/FilterMenu/blob/master/screenshot/screen002.png)
+![](https://github.com/freeler/FilterMenu/blob/master/screenshot/screen003.png)
+![](https://github.com/freeler/FilterMenu/blob/master/screenshot/screen004.png)
 
 
 ## 使用
@@ -41,7 +44,6 @@ private Filter getGenderFilter() {
     options.add(new BaseBean<>(2, "女"));
     options.add(new BaseBean<>(0, "性别不明"));
     return new ListFilter<BaseBean<Integer, String>>(this)
-            .setNeedAll(true)
             .setOptions(options)
             .setDisplayConvert(new Convert<BaseBean<Integer, String>, String>() {
                 @Override
@@ -119,6 +121,8 @@ private Filter getRoomFilter() {
                                 }
                             }
                             put("room", stringBuilder.length() == 0 ? null : stringBuilder.toString());
+                        } else {
+                            put("room", null);
                         }
                     }};
                 }
