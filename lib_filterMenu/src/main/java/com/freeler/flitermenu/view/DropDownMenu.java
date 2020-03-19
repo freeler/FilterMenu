@@ -225,6 +225,8 @@ public class DropDownMenu extends LinearLayout {
         for (int i = 0; i < popupViews.size(); i++) {
             View view = popupViews.get(i);
             view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            // 防止区域点击穿透触发maskView点击事件
+            view.setClickable(true);
             popupMenuViews.addView(view, i);
         }
 
