@@ -23,6 +23,7 @@ public class ListFilter<T> extends Filter<T> {
 
     private List<T> data = new ArrayList<>();
     private boolean isNeedAll = false;
+    private ListFilterAdapter adapter;
 
     public ListFilter(Context context) {
         super(context);
@@ -41,7 +42,10 @@ public class ListFilter<T> extends Filter<T> {
 
     @Override
     public void onOpen() {
-
+        if (adapter != null) {
+            T value = getValue();
+            adapter.setValue(value);
+        }
     }
 
 
@@ -57,14 +61,17 @@ public class ListFilter<T> extends Filter<T> {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         RecyclerView recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        recyclerView.addItemDecoration(new VerticalItemDecoration());
         recyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.white));
         return recyclerView;
     }
 
     @SuppressWarnings("unchecked")
     private RecyclerView.Adapter getAdapter() {
-        if (isNeedAll) data.add(0, null);
-        ListFilterAdapter adapter = new ListFilterAdapter(getContext(), data, getDisplayConvert());
+        if (isNeedAll)
+            data.add(0, null);
+        adapter = new ListFilterAdapter(getContext(), data, getDisplayConvert());
         adapter.setOnItemClickListener(new ListFilterAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {

@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         options.add(new BaseBean<>(2, "女"));
         options.add(new BaseBean<>(0, "性别不明"));
         return new ListFilter<BaseBean<Integer, String>>(this)
-                .setNeedAll(true)
                 .setOptions(options)
                 .setDisplayConvert(new Convert<BaseBean<Integer, String>, String>() {
                     @Override
