@@ -5,7 +5,6 @@ Android 列表筛选
 ## Screenshot
 
 ![](https://github.com/freeler/FilterMenu/blob/master/screenshot/screen001.png)
-![](https://github.com/freeler/FilterMenu/blob/master/screenshot/screen002.png)
 ![](https://github.com/freeler/FilterMenu/blob/master/screenshot/screen003.png)
 ![](https://github.com/freeler/FilterMenu/blob/master/screenshot/screen004.png)
 
