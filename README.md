@@ -14,9 +14,10 @@ Android 列表筛选
 - 方式 1
 
 ```java
+暂时不提供仓库下载，功能持续添加中
 ```
 
-- 方式 2. 拷贝Libs工程里面的lib_filterMenu到自己的工程里面
+- 方式 2. 拷贝Libs工程里面的lib_filterMenu到自己的工程里面，根据需求自行修改使用
 
 ## 注意点
 dropDownMenu的父布局必须是RelativeLayout
