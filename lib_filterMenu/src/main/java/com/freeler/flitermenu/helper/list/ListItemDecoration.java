@@ -18,7 +18,7 @@ import com.freeler.flitermenu.utils.ConvertUtils;
  * @author: xuzeyang
  * @Date: 2020/3/12
  */
-public class VerticalItemDecoration extends RecyclerView.ItemDecoration {
+public class ListItemDecoration extends RecyclerView.ItemDecoration {
 
     /**
      * 分隔线高度
@@ -27,7 +27,7 @@ public class VerticalItemDecoration extends RecyclerView.ItemDecoration {
     private int dividerMargin = ConvertUtils.dp2Px(10f);
     private Paint paint;
 
-    public VerticalItemDecoration() {
+    public ListItemDecoration() {
         paint = new Paint();
         paint.setColor(Color.parseColor("#EEEEEE"));
     }

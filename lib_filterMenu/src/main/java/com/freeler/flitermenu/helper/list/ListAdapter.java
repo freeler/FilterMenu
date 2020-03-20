@@ -21,7 +21,7 @@ import java.util.List;
  * @author: freeler
  * @Date: 2020/1/13
  */
-public class ListFilterAdapter<T> extends RecyclerView.Adapter<ListFilterAdapter.ViewHolder> {
+public class ListAdapter<T> extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     /**
      * item文字普通颜色
@@ -54,11 +54,11 @@ public class ListFilterAdapter<T> extends RecyclerView.Adapter<ListFilterAdapter
     private T choiceValue;
 
 
-    public ListFilterAdapter(Context context, @NonNull List<T> list) {
+    public ListAdapter(Context context, @NonNull List<T> list) {
         this(context, list, null);
     }
 
-    public ListFilterAdapter(Context context, @NonNull List<T> list, Convert<T, String> convert) {
+    public ListAdapter(Context context, @NonNull List<T> list, Convert<T, String> convert) {
         this.context = context;
         this.list = list;
         this.convert = convert;
@@ -66,13 +66,13 @@ public class ListFilterAdapter<T> extends RecyclerView.Adapter<ListFilterAdapter
 
     @NonNull
     @Override
-    public ListFilterAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_filer, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListFilterAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ListAdapter.ViewHolder holder, final int position) {
         T t = list.get(position);
         String value = t == null ? "不限" : t.toString();
         if (convert != null && t != null)

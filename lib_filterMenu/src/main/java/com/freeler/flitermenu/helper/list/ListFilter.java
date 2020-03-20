@@ -23,7 +23,7 @@ public class ListFilter<T> extends Filter<T> {
 
     private List<T> data = new ArrayList<>();
     private boolean isNeedAll = false;
-    private ListFilterAdapter adapter;
+    private ListAdapter<T> adapter;
 
     public ListFilter(Context context) {
         super(context);
@@ -62,7 +62,7 @@ public class ListFilter<T> extends Filter<T> {
         RecyclerView recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        recyclerView.addItemDecoration(new VerticalItemDecoration());
+        recyclerView.addItemDecoration(new ListItemDecoration());
         recyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.white));
         return recyclerView;
     }
@@ -71,8 +71,8 @@ public class ListFilter<T> extends Filter<T> {
     private RecyclerView.Adapter getAdapter() {
         if (isNeedAll)
             data.add(0, null);
-        adapter = new ListFilterAdapter(getContext(), data, getDisplayConvert());
-        adapter.setOnItemClickListener(new ListFilterAdapter.OnItemClickListener() {
+        adapter = new ListAdapter(getContext(), data, getDisplayConvert());
+        adapter.setOnItemClickListener(new ListAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
                 changeValueWithHide(data.get(position));

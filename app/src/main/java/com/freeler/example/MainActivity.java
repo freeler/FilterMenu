@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.freeler.flitermenu.bean.BaseBean;
 import com.freeler.flitermenu.helper.Filter;
 import com.freeler.flitermenu.helper.FilterViewHelper;
-import com.freeler.flitermenu.helper.grid.GridListFilter;
+import com.freeler.flitermenu.helper.grid.GridMultiFilter;
 import com.freeler.flitermenu.helper.list.ListFilter;
 import com.freeler.flitermenu.listener.Convert;
 import com.freeler.flitermenu.listener.OnValueChangeListener;
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         options.add(new BaseBean<>(4, "四室"));
         options.add(new BaseBean<>(5, "五室"));
         options.add(new BaseBean<>(99, "五室以上"));
-        return new GridListFilter<BaseBean<Integer, String>>(this)
+        return new GridMultiFilter<BaseBean<Integer, String>>(this)
                 .setHeadName("房型选择")
                 .setOptions(options)
                 .setMultiDisplayConvert(new Convert<BaseBean<Integer, String>, String>() {

@@ -27,7 +27,7 @@ import java.util.List;
  * @author: freeler
  * @Date: 2020/3/12
  */
-public class GridListFilter<T> extends Filter<List<T>> {
+public class GridMultiFilter<T> extends Filter<List<T>> {
 
     private static final float defaultTextSize = 16f;
     /**
@@ -95,10 +95,10 @@ public class GridListFilter<T> extends Filter<List<T>> {
     /**
      * adapter
      */
-    private GridAdapter adapter;
+    private GridMultiAdapter<T> adapter;
 
 
-    public GridListFilter(Context context) {
+    public GridMultiFilter(Context context) {
         super(context);
     }
 
@@ -107,7 +107,7 @@ public class GridListFilter<T> extends Filter<List<T>> {
      *
      * @param data 数据源
      */
-    public GridListFilter<T> setOptions(@NonNull List<T> data) {
+    public GridMultiFilter<T> setOptions(@NonNull List<T> data) {
         this.data = data;
         return this;
     }
@@ -117,7 +117,7 @@ public class GridListFilter<T> extends Filter<List<T>> {
      *
      * @param headName 标题描述
      */
-    public GridListFilter<T> setHeadName(String headName) {
+    public GridMultiFilter<T> setHeadName(String headName) {
         this.headName = headName;
         return this;
     }
@@ -127,7 +127,7 @@ public class GridListFilter<T> extends Filter<List<T>> {
      *
      * @param titleStyle 标题回调
      */
-    public GridListFilter<T> setHeadStyle(TitleStyle titleStyle) {
+    public GridMultiFilter<T> setHeadStyle(TitleStyle titleStyle) {
         this.titleStyle = titleStyle;
         return this;
     }
@@ -137,7 +137,7 @@ public class GridListFilter<T> extends Filter<List<T>> {
      *
      * @param spanCount 最多显示的个数，默认是4
      */
-    public GridListFilter<T> setSpanCount(int spanCount) {
+    public GridMultiFilter<T> setSpanCount(int spanCount) {
         this.spanCount = spanCount;
         return this;
     }
@@ -147,7 +147,7 @@ public class GridListFilter<T> extends Filter<List<T>> {
         throw new IllegalArgumentException("please replace with setMultiDisplayConvert method");
     }
 
-    public GridListFilter<T> setMultiDisplayConvert(Convert<T, String> convert) {
+    public GridMultiFilter<T> setMultiDisplayConvert(Convert<T, String> convert) {
         this.displayConvert = convert;
         return this;
     }
@@ -238,7 +238,7 @@ public class GridListFilter<T> extends Filter<List<T>> {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         recyclerView.setPadding(paddingStart, 0, paddingEnd, 0);
-        recyclerView.addItemDecoration(new GridVerticalItemDecoration(spanCount, itemVerticalSpace, itemHorizontalSpace));
+        recyclerView.addItemDecoration(new GridItemDecoration(spanCount, itemVerticalSpace, itemHorizontalSpace));
         RecyclerView.Adapter adapter = getAdapter();
         recyclerView.setAdapter(adapter);
         return recyclerView;
@@ -246,8 +246,8 @@ public class GridListFilter<T> extends Filter<List<T>> {
 
     @SuppressWarnings("unchecked")
     private RecyclerView.Adapter getAdapter() {
-        adapter = new GridAdapter(getContext(), data, choiceData, displayConvert);
-        adapter.setOnItemClickListener(new GridAdapter.OnItemClickListener() {
+        adapter = new GridMultiAdapter(getContext(), data, choiceData, displayConvert);
+        adapter.setOnItemClickListener(new GridMultiAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
                 T t = data.get(position);

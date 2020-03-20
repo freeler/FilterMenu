@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * @author: xuzeyang
  * @Date: 2020/3/12
  */
-public class GridVerticalItemDecoration extends RecyclerView.ItemDecoration {
+public class GridItemDecoration extends RecyclerView.ItemDecoration {
 
     /**
      * 一行最多显示的数量
@@ -28,7 +28,7 @@ public class GridVerticalItemDecoration extends RecyclerView.ItemDecoration {
      */
     private int itemHorizontalSpace;
 
-    public GridVerticalItemDecoration(int spanCount, int itemVerticalSpace, int itemHorizontalSpace) {
+    public GridItemDecoration(int spanCount, int itemVerticalSpace, int itemHorizontalSpace) {
         this.spanCount = spanCount;
         this.itemVerticalSpace = itemVerticalSpace;
         this.itemHorizontalSpace = itemHorizontalSpace;

@@ -97,7 +97,7 @@ private Filter getRoomFilter() {
     options.add(new BaseBean<>(4, "四居"));
     options.add(new BaseBean<>(5, "五居"));
     options.add(new BaseBean<>(99, "五居以上"));
-    return new GridListFilter<BaseBean<Integer, String>>(this)
+    return new GridMultiFilter<BaseBean<Integer, String>>(this)
             .setHeadName("房型选择")
             .setOptions(options)
             .setMultiDisplayConvert(new Convert<BaseBean<Integer, String>, String>() {

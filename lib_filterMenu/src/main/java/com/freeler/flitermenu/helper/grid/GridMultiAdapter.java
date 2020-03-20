@@ -22,7 +22,7 @@ import java.util.List;
  * @author: freeler
  * @Date: 2020/1/13
  */
-public class GridAdapter<T> extends RecyclerView.Adapter<GridAdapter.ViewHolder> {
+public class GridMultiAdapter<T> extends RecyclerView.Adapter<GridMultiAdapter.ViewHolder> {
 
     /**
      * 默认颜色
@@ -58,11 +58,11 @@ public class GridAdapter<T> extends RecyclerView.Adapter<GridAdapter.ViewHolder>
      */
     private OnItemClickListener listener;
 
-    public GridAdapter(Context context, @NonNull List<T> list, @NonNull List<T> choiceList) {
+    public GridMultiAdapter(Context context, @NonNull List<T> list, @NonNull List<T> choiceList) {
         this(context, list, choiceList, null);
     }
 
-    public GridAdapter(Context context, @NonNull List<T> list, @NonNull List<T> choiceList, Convert<T, String> convert) {
+    public GridMultiAdapter(Context context, @NonNull List<T> list, @NonNull List<T> choiceList, Convert<T, String> convert) {
         this.context = context;
         this.list = list;
         this.choiceList = choiceList;
@@ -71,13 +71,13 @@ public class GridAdapter<T> extends RecyclerView.Adapter<GridAdapter.ViewHolder>
 
     @NonNull
     @Override
-    public GridAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GridMultiAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_filer_grid, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final GridAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final GridMultiAdapter.ViewHolder holder, final int position) {
         final T t = list.get(position);
         String value = t.toString();
         if (convert != null) {
@@ -104,7 +104,7 @@ public class GridAdapter<T> extends RecyclerView.Adapter<GridAdapter.ViewHolder>
      * @param holder ViewHolder
      * @param t      泛型对象
      */
-    private void initItemColorStatus(GridAdapter.ViewHolder holder, T t) {
+    private void initItemColorStatus(GridMultiAdapter.ViewHolder holder, T t) {
         itemColorStatus(holder, t, false);
     }
 
@@ -114,11 +114,11 @@ public class GridAdapter<T> extends RecyclerView.Adapter<GridAdapter.ViewHolder>
      * @param holder ViewHolder
      * @param t      泛型对象
      */
-    private void reverseItemColorStatus(GridAdapter.ViewHolder holder, T t) {
+    private void reverseItemColorStatus(GridMultiAdapter.ViewHolder holder, T t) {
         itemColorStatus(holder, t, true);
     }
 
-    private void itemColorStatus(GridAdapter.ViewHolder holder, T t, boolean isReverse) {
+    private void itemColorStatus(GridMultiAdapter.ViewHolder holder, T t, boolean isReverse) {
         ArrayList<String> strings = new ArrayList<>();
         for (T t1 : choiceList) {
             strings.add(t1.toString());
