@@ -13,7 +13,6 @@ import com.freeler.flitermenu.helper.FilterViewHelper;
 import com.freeler.flitermenu.helper.grid.GridMultiFilter;
 import com.freeler.flitermenu.helper.list.ListFilter;
 import com.freeler.flitermenu.listener.Convert;
-import com.freeler.flitermenu.listener.OnValueChangeListener;
 import com.freeler.flitermenu.view.DropDownMenu;
 
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 .addFilterView(getGenderFilter())
                 .addFilterView(getAgeFilter())
                 .addFilterView(getRoomFilter())
-                .addListener(new OnValueChangeListener() {
+                .addListener(new FilterViewHelper.OnValueChangeListener() {
                     @Override
                     public void changed(@Nullable Filter filterView, @NonNull Map<String, Object> map) {
                         tvContent.setText(map.toString());

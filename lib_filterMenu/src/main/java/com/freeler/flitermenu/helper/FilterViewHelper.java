@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.freeler.flitermenu.view.DropDownMenu;
-import com.freeler.flitermenu.listener.OnValueChangeListener;
-import com.freeler.flitermenu.listener.OnFilterValueChangeListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -58,7 +56,7 @@ public class FilterViewHelper {
                 menuValues.putAll(serverValue);
 
             filter.setMenuHelper(this);
-            filter.setOnChangeListener(new OnFilterValueChangeListener() {
+            filter.setOnChangeListener(new Filter.OnFilterValueChangeListener() {
                 @Override
                 public void changed(@Nullable Filter filter) {
                     dropDownMenu.setTabText(Objects.requireNonNull(filter).getTabName());
@@ -150,5 +148,8 @@ public class FilterViewHelper {
 
     }
 
-
+    public interface OnValueChangeListener {
+        void changed(@Nullable Filter filterView, @NonNull Map<String, Object> map);
+    }
 }
+

@@ -3,8 +3,9 @@ package com.freeler.flitermenu.helper;
 import android.content.Context;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import com.freeler.flitermenu.listener.Convert;
-import com.freeler.flitermenu.listener.OnFilterValueChangeListener;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
@@ -135,5 +136,9 @@ public abstract class Filter<T> {
      */
     public abstract View getView();
 
+
+    public interface OnFilterValueChangeListener {
+        void changed(@Nullable Filter filter);
+    }
 
 }
