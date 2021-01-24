@@ -6,8 +6,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
 
-import com.freeler.flitermenu.bean.BaseBean;
 import com.freeler.flitermenu.helper.Filter;
 import com.freeler.flitermenu.helper.FilterViewHelper;
 import com.freeler.flitermenu.helper.grid.GridMultiFilter;
@@ -49,83 +49,83 @@ public class MainActivity extends AppCompatActivity {
 
 
     private Filter getGenderFilter() {
-        List<BaseBean<Integer, String>> options = new ArrayList<>();
-        options.add(new BaseBean<>(1, "男"));
-        options.add(new BaseBean<>(2, "女"));
-        options.add(new BaseBean<>(0, "性别不明"));
-        return new ListFilter<BaseBean<Integer, String>>(this)
+        List<Pair<Integer, String>> options = new ArrayList<>();
+        options.add(new Pair<>(1, "男"));
+        options.add(new Pair<>(2, "女"));
+        options.add(new Pair<>(0, "性别不明"));
+        return new ListFilter<Pair<Integer, String>>(this)
                 .setOptions(options)
-                .setDisplayConvert(new Convert<BaseBean<Integer, String>, String>() {
+                .setDisplayConvert(new Convert<Pair<Integer, String>, String>() {
                     @Override
-                    public String apply(BaseBean<Integer, String> baseBean) {
-                        return baseBean.getT2();
+                    public String apply(Pair<Integer, String> baseBean) {
+                        return baseBean.second;
                     }
                 })
                 .setTitleName("性别")
                 .setValue(options.get(0))
-                .setValueConvert(new Convert<BaseBean<Integer, String>, Map<String, Object>>() {
+                .setValueConvert(new Convert<Pair<Integer, String>, Map<String, Object>>() {
                     @Override
-                    public Map<String, Object> apply(final BaseBean<Integer, String> baseBean) {
+                    public Map<String, Object> apply(final Pair<Integer, String> baseBean) {
                         return new HashMap<String, Object>() {{
-                            put("gender", baseBean == null ? null : baseBean.getT1());
+                            put("gender", baseBean == null ? null : baseBean.first);
                         }};
                     }
                 });
     }
 
     private Filter getAgeFilter() {
-        List<BaseBean<Integer, String>> options = new ArrayList<>();
-        options.add(new BaseBean<>(10, "十岁"));
-        options.add(new BaseBean<>(20, "二十岁"));
-        options.add(new BaseBean<>(30, "三十岁"));
-        return new ListFilter<BaseBean<Integer, String>>(this)
+        List<Pair<Integer, String>> options = new ArrayList<>();
+        options.add(new Pair<>(10, "十岁"));
+        options.add(new Pair<>(20, "二十岁"));
+        options.add(new Pair<>(30, "三十岁"));
+        return new ListFilter<Pair<Integer, String>>(this)
                 .setNeedAll(true)
                 .setOptions(options)
-                .setDisplayConvert(new Convert<BaseBean<Integer, String>, String>() {
+                .setDisplayConvert(new Convert<Pair<Integer, String>, String>() {
                     @Override
-                    public String apply(BaseBean<Integer, String> baseBean) {
-                        return baseBean.getT2();
+                    public String apply(Pair<Integer, String> baseBean) {
+                        return baseBean.second;
                     }
                 })
                 .setTitleName("年龄")
                 .setValue(options.get(0))
-                .setValueConvert(new Convert<BaseBean<Integer, String>, Map<String, Object>>() {
+                .setValueConvert(new Convert<Pair<Integer, String>, Map<String, Object>>() {
                     @Override
-                    public Map<String, Object> apply(final BaseBean<Integer, String> baseBean) {
+                    public Map<String, Object> apply(final Pair<Integer, String> baseBean) {
                         return new HashMap<String, Object>() {{
-                            put("age", baseBean == null ? null : baseBean.getT1());
+                            put("age", baseBean == null ? null : baseBean.first);
                         }};
                     }
                 });
     }
 
     private Filter getRoomFilter() {
-        List<BaseBean<Integer, String>> options = new ArrayList<>();
-        options.add(new BaseBean<>(1, "一室"));
-        options.add(new BaseBean<>(2, "二室"));
-        options.add(new BaseBean<>(3, "三室"));
-        options.add(new BaseBean<>(4, "四室"));
-        options.add(new BaseBean<>(5, "五室"));
-        options.add(new BaseBean<>(99, "五室以上"));
-        return new GridMultiFilter<BaseBean<Integer, String>>(this)
+        List<Pair<Integer, String>> options = new ArrayList<>();
+        options.add(new Pair<>(1, "一室"));
+        options.add(new Pair<>(2, "二室"));
+        options.add(new Pair<>(3, "三室"));
+        options.add(new Pair<>(4, "四室"));
+        options.add(new Pair<>(5, "五室"));
+        options.add(new Pair<>(99, "五室以上"));
+        return new GridMultiFilter<Pair<Integer, String>>(this)
                 .setHeadName("房型选择")
                 .setOptions(options)
-                .setMultiDisplayConvert(new Convert<BaseBean<Integer, String>, String>() {
+                .setMultiDisplayConvert(new Convert<Pair<Integer, String>, String>() {
                     @Override
-                    public String apply(BaseBean<Integer, String> baseBean) {
-                        return baseBean.getT2();
+                    public String apply(Pair<Integer, String> baseBean) {
+                        return baseBean.second;
                     }
                 })
                 .setTitleName("房型选择")
                 .setValue(null)
-                .setValueConvert(new Convert<List<BaseBean<Integer, String>>, Map<String, Object>>() {
+                .setValueConvert(new Convert<List<Pair<Integer, String>>, Map<String, Object>>() {
                     @Override
-                    public Map<String, Object> apply(final List<BaseBean<Integer, String>> baseBeans) {
+                    public Map<String, Object> apply(final List<Pair<Integer, String>> baseBeans) {
                         return new HashMap<String, Object>() {{
                             if (baseBeans != null) {
                                 StringBuilder stringBuilder = new StringBuilder();
                                 for (int i = 0; i < baseBeans.size(); i++) {
-                                    stringBuilder.append(baseBeans.get(i).getT1());
+                                    stringBuilder.append(baseBeans.get(i).first);
                                     if (i < baseBeans.size() - 1) {
                                         stringBuilder.append(",");
                                     }

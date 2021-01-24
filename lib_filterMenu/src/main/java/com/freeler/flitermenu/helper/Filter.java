@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public abstract class Filter<T> {
 
-    private WeakReference<Context> context;
+    private final WeakReference<Context> context;
     private String titleName;
     private T value;
     private FilterViewHelper helper;
